@@ -39,12 +39,14 @@ void free(Matriz& matriz) {
 // Funcion para mostrar una matriz en la consola
 void mostrarMatriz(const Matriz& matriz) {
     for (int i = 0; i < matriz.filas; i++) {
+        cout << "|";
         for (int j = 0; j < matriz.columnas; j++) {
-            cout << setw(5) << matriz.datos[i][j] << " "; // Utilizamos setw(5) para alinear las columnas
+            cout << setw(5) << matriz.datos[i][j] << " "; 
         }
-        cout << endl;
+        cout << "|" << endl;
     }
 }
+
 
 // Funcion para realizar la suma de dos matrices
 Matriz sumMatriz(const Matriz& matriz1, const Matriz& matriz2) {
