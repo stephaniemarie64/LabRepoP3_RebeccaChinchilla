@@ -13,7 +13,7 @@ struct Matriz {
 };
 
 // Funcion para generar una matriz con valores aleatorios
-Matriz generarMatriz(int filas, int columnas) {
+Matriz Imatriz(int filas, int columnas) {
     Matriz matriz;
     matriz.filas = filas;
     matriz.columnas = columnas;
@@ -22,14 +22,14 @@ Matriz generarMatriz(int filas, int columnas) {
     for (int i = 0; i < filas; i++) {
         matriz.datos[i] = new int[columnas];
         for (int j = 0; j < columnas; j++) {
-            matriz.datos[i][j] = rand() % 101 - 50; // Generar valores aleatorios en el rango [-50, 50]
+            matriz.datos[i][j] = rand() % 101 - 50; //esto genrera valores aleatorios en el rango [-50, 50]
         }
     }
     return matriz;
 }
 
 // Funcion para liberar la memoria de una matriz
-void liberarMatriz(Matriz& matriz) {
+void free(Matriz& matriz) {
     for (int i = 0; i < matriz.filas; i++) {
         delete[] matriz.datos[i];
     }
@@ -46,20 +46,110 @@ void mostrarMatriz(const Matriz& matriz) {
     }
 }
 
-void opcion1() {
-    cout << "Seleccionaste la opcion 1" << endl;
+// Funcion para realizar la suma de dos matrices
+Matriz sumMatriz(const Matriz& matriz1, const Matriz& matriz2) {
+    Matriz ANS;
+    ANS.filas = matriz1.filas;
+    ANS.columnas = matriz1.columnas;
+    ANS.datos = new int* [ANS.filas];
+
+    for (int i = 0; i < ANS.filas; i++) {
+        ANS.datos[i] = new int[ANS.columnas];
+        for (int j = 0; j < ANS.columnas; j++) {
+            ANS.datos[i][j] = matriz1.datos[i][j] + matriz2.datos[i][j];
+        }
+    }
+    return ANS;
 }
 
-void opcion2() {
-    cout << "Seleccionaste la opcion 2" << endl;
+// Funcion para realizar la resta de dos matrices
+Matriz lessMatrices(const Matriz& matriz1, const Matriz& matriz2) {
+    Matriz ANS;
+    ANS.filas = matriz1.filas;
+    ANS.columnas = matriz1.columnas;
+    ANS.datos = new int* [ANS.filas];
+
+    for (int i = 0; i < ANS.filas; i++) {
+        ANS.datos[i] = new int[ANS.columnas];
+        for (int j = 0; j < ANS.columnas; j++) {
+            ANS.datos[i][j] = matriz1.datos[i][j] - matriz2.datos[i][j];
+        }
+    }
+    return ANS;
 }
 
+// Funcion para realizar la multiplicación de dos matrices
+Matriz mMatriz(const Matriz& matriz1, const Matriz& matriz2) {
+    Matriz ANS;
+    ANS.filas = matriz1.filas;
+    ANS.columnas = matriz2.columnas;
+    ANS.datos = new int* [ANS.filas];
 
-void mostrarMenu() {
+    for (int i = 0; i < ANS.filas; i++) {
+        ANS.datos[i] = new int[ANS.columnas];
+        for (int j = 0; j < ANS.columnas; j++) {
+            ANS.datos[i][j] = 0;
+            for (int k = 0; k < matriz1.columnas; k++) {
+                ANS.datos[i][j] += matriz1.datos[i][k] * matriz2.datos[k][j];
+            }
+        }
+    }
+    return ANS;
+}
+
+// Funcion para realizar las operaciones entre matrices
+void op(const vector<Matriz*>& matrices, int indiceMatriz1, int indiceMatriz2, char operacion) {
+    if (indiceMatriz1 >= 0 && indiceMatriz1 < matrices.size() && indiceMatriz2 >= 0 && indiceMatriz2 < matrices.size()) {
+        Matriz matriz1 = *matrices[indiceMatriz1];
+        Matriz matriz2 = *matrices[indiceMatriz2];
+        Matriz ANS;
+
+        switch (operacion) {
+        case '+':
+            if (matriz1.filas == matriz2.filas && matriz1.columnas == matriz2.columnas) {
+                ANS = sumMatriz(matriz1, matriz2);
+                cout << "Resultado de la suma:" << endl;
+                mostrarMatriz(ANS);
+            }
+            else {
+                cout << "Error: Las matrices deben tener las mismas dimensiones para realizar la suma." << endl;
+            }
+            break;
+        case '-':
+            if (matriz1.filas == matriz2.filas && matriz1.columnas == matriz2.columnas) {
+                ANS = lessMatrices(matriz1, matriz2);
+                cout << "Resultado de la resta:" << endl;
+                mostrarMatriz(ANS);
+            }
+            else {
+                cout << "Error: Las matrices deben tener las mismas dimensiones para realizar la resta." << endl;
+            }
+            break;
+        case '*':
+            if (matriz1.columnas == matriz2.filas) {
+                ANS = mMatriz(matriz1, matriz2);
+                cout << "Resultado de la multiplicacion:" << endl;
+                mostrarMatriz(ANS);
+            }
+            else {
+                cout << "Error: El numero de columnas de la primera matriz debe ser igual al numero de filas de la segunda matriz para realizar la multiplicacion." << endl;
+            }
+            break;
+        default:
+            cout << "Error: Operacion invalida. Intente de nuevo con alguno de estos simbolos(*,+,-)." << endl;
+        }
+    }
+    else {
+        cout << "Error: el numero de matriz invalidos." << endl;
+    }
+}
+
+// Funcion para mostrar el menu principal
+void mostrarMenu(vector<Matriz*>& matrices) {
     int opcion;
 
     do {
-        // Mostrar el menú
+        // Mostrar el menu
         cout << "MENU" << endl;
         cout << "1. Generar matriz" << endl;
         cout << "2. Realizar operaciones entre matrices" << endl;
@@ -68,27 +158,71 @@ void mostrarMenu() {
         cin >> opcion;
         cout << endl;
 
-        // Realizar acciones según la opcion seleccionada
+        // Realizar acciones segun la opcion seleccionada
         switch (opcion) {
         case 1:
-            opcion1();
+            int filas, columnas;
+            cout << "Generarador de Matrices" << endl << endl;
+            cout << "Ingrese el numero de filas de la matriz: ";
+            cin >> filas;
+            cout << "Ingrese el numero de columnas de la matriz: ";
+            cin >> columnas;
+            if (filas >= 2 && columnas >= 2) {
+                Matriz* matriz = new Matriz;
+                *matriz = Imatriz(filas, columnas);
+                matrices.push_back(matriz);
+                cout << endl << "Matriz generada:" << endl;
+                mostrarMatriz(*matriz);
+            }
+            else {
+                cout << "Error: El numero de filas y columnas debe ser mayor o igual a 2." << endl;
+            }
             break;
         case 2:
-            opcion2();
+            if (matrices.empty()) {
+                cout << "Error: No hay matrices disponibles para realizar operaciones." << endl;
+            }
+            else {
+                cout << "Matrices disponibles:" << endl;
+                for (int i = 0; i < matrices.size(); i++) {
+                    cout << "Matriz " << i + 1 << ":" << endl;
+                    mostrarMatriz(*matrices[i]);
+                    cout << endl;
+                }
+
+                int indiceMatriz1, indiceMatriz2;
+                char operacion;
+
+                cout << "Ingrese el numero de la primera matriz elegida: ";
+                cin >> indiceMatriz1;
+                cout << "Ingrese el numero de la segunda matriz elegida: ";
+                cin >> indiceMatriz2;
+                cout << "Ingrese la operacion a realizar (+ para suma, - para resta, * para multiplicacion): ";
+                cin >> operacion;
+                cout << endl;
+                op(matrices, indiceMatriz1 - 1, indiceMatriz2 - 1, operacion);
+            }
             break;
         case 3:
             cout << "Saliendo del programa..." << endl;
             break;
         default:
-            cout << "Opcion invalida. Intenta de nuevo." << endl;
+            cout << "Opcion invalida. Intente de nuevo." << endl;
         }
 
         cout << endl;
 
     } while (opcion != 3);
+
+    // Liberar la memoria de las matrices generadas
+    for (int i = 0; i < matrices.size(); i++) {
+        free(*matrices[i]);
+        delete matrices[i];
+    }
 }
 
 int main() {
-    mostrarMenu();
+    vector<Matriz*> matrices;
+    mostrarMenu(matrices);
     return 0;
 }
