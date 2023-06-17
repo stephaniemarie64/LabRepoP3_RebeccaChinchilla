@@ -1,0 +1,3 @@
+﻿  LabRepoP3_RebeccaChinchilla.cpp
+C:\Users\Rebecca Chinchilla\source\repos\LabRepoP3_RebeccaChinchilla\LabRepoP3_RebeccaChinchilla.cpp(27,15): warning C4244: 'argumento': conversión de 'time_t' a 'unsigned int'; posible pérdida de datos
+  LabRepoP3_RebeccaChinchilla.vcxproj -> C:\Users\Rebecca Chinchilla\source\repos\LabRepoP3_RebeccaChinchilla\x64\Debug\LabRepoP3_RebeccaChinchilla.exe
