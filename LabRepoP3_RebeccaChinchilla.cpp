@@ -6,7 +6,7 @@
 
 using namespace std;
 
-struct Matriz {
+struct Matriz {//esto es para que sea publico y todos lo puedan usar
     int filas;
     int columnas;
     int** datos;
@@ -98,13 +98,13 @@ Matriz mMatriz(const Matriz& matriz1, const Matriz& matriz2) {
 }
 
 // Funcion para realizar las operaciones entre matrices
-void op(const vector<Matriz*>& matrices, int indiceMatriz1, int indiceMatriz2, char operacion) {
-    if (indiceMatriz1 >= 0 && indiceMatriz1 < matrices.size() && indiceMatriz2 >= 0 && indiceMatriz2 < matrices.size()) {
-        Matriz matriz1 = *matrices[indiceMatriz1];
-        Matriz matriz2 = *matrices[indiceMatriz2];
+void op(const vector<Matriz*>& matrices, int numMatriz1, int numMatriz2, char opr) {
+    if (numMatriz1 >= 0 && numMatriz1 < matrices.size() && numMatriz2 >= 0 && numMatriz2 < matrices.size()) {
+        Matriz matriz1 = *matrices[numMatriz1];
+        Matriz matriz2 = *matrices[numMatriz2];
         Matriz ANS;
 
-        switch (operacion) {
+        switch (opr) {
         case '+':
             if (matriz1.filas == matriz2.filas && matriz1.columnas == matriz2.columnas) {
                 ANS = sumMatriz(matriz1, matriz2);
@@ -136,7 +136,7 @@ void op(const vector<Matriz*>& matrices, int indiceMatriz1, int indiceMatriz2, c
             }
             break;
         default:
-            cout << "Error: Operacion invalida. Intente de nuevo con alguno de estos simbolos(*,+,-)." << endl;
+            cout << "Error: opr invalida. Intente de nuevo con alguno de estos simbolos(*,+,-)." << endl;
         }
     }
     else {
@@ -144,7 +144,7 @@ void op(const vector<Matriz*>& matrices, int indiceMatriz1, int indiceMatriz2, c
     }
 }
 
-// Funcion para mostrar el menu principal
+// Funcion para el menu principal
 void mostrarMenu(vector<Matriz*>& matrices) {
     int opcion;
 
@@ -190,17 +190,17 @@ void mostrarMenu(vector<Matriz*>& matrices) {
                     cout << endl;
                 }
 
-                int indiceMatriz1, indiceMatriz2;
-                char operacion;
+                int numMatriz1, numMatriz2;
+                char opr;
 
                 cout << "Ingrese el numero de la primera matriz elegida: ";
-                cin >> indiceMatriz1;
+                cin >> numMatriz1;
                 cout << "Ingrese el numero de la segunda matriz elegida: ";
-                cin >> indiceMatriz2;
-                cout << "Ingrese la operacion a realizar (+ para suma, - para resta, * para multiplicacion): ";
-                cin >> operacion;
+                cin >> numMatriz2;
+                cout << "Ingrese la opr a realizar (+ para suma, - para resta, * para multiplicacion): ";
+                cin >> opr;
                 cout << endl;
-                op(matrices, indiceMatriz1 - 1, indiceMatriz2 - 1, operacion);
+                op(matrices, numMatriz1 - 1, numMatriz2 - 1, opr);
             }
             break;
         case 3:
