@@ -110,8 +110,7 @@ void op(const vector<Matriz*>& matrices, int numMatriz1, int numMatriz2, char op
                 ANS = sumMatriz(matriz1, matriz2);
                 cout << "Resultado de la suma:" << endl;
                 mostrarMatriz(ANS);
-            }
-            else {
+            }else {
                 cout << "Error: Las matrices deben tener las mismas dimensiones para realizar la suma." << endl;
             }
             break;
@@ -120,8 +119,7 @@ void op(const vector<Matriz*>& matrices, int numMatriz1, int numMatriz2, char op
                 ANS = lessMatrices(matriz1, matriz2);
                 cout << "Resultado de la resta:" << endl;
                 mostrarMatriz(ANS);
-            }
-            else {
+            }else {
                 cout << "Error: Las matrices deben tener las mismas dimensiones para realizar la resta." << endl;
             }
             break;
@@ -130,16 +128,14 @@ void op(const vector<Matriz*>& matrices, int numMatriz1, int numMatriz2, char op
                 ANS = mMatriz(matriz1, matriz2);
                 cout << "Resultado de la multiplicacion:" << endl;
                 mostrarMatriz(ANS);
-            }
-            else {
+            }else {
                 cout << "Error: El numero de columnas de la primera matriz debe ser igual al numero de filas de la segunda matriz para realizar la multiplicacion." << endl;
             }
             break;
         default:
             cout << "Error: opr invalida. Intente de nuevo con alguno de estos simbolos(*,+,-)." << endl;
         }
-    }
-    else {
+    } else {
         cout << "Error: el numero de matriz invalidos." << endl;
     }
 }
@@ -173,23 +169,20 @@ void mostrarMenu(vector<Matriz*>& matrices) {
                 matrices.push_back(matriz);
                 cout << endl << "Matriz generada:" << endl;
                 mostrarMatriz(*matriz);
-            }
-            else {
+            }else {
                 cout << "Error: El numero de filas y columnas debe ser mayor o igual a 2." << endl;
             }
             break;
         case 2:
             if (matrices.empty()) {
                 cout << "Error: No hay matrices disponibles para realizar operaciones." << endl;
-            }
-            else {
+            }else {
                 cout << "Matrices disponibles:" << endl;
                 for (int i = 0; i < matrices.size(); i++) {
                     cout << "Matriz " << i + 1 << ":" << endl;
                     mostrarMatriz(*matrices[i]);
                     cout << endl;
                 }
-
                 int numMatriz1, numMatriz2;
                 char opr;
 
@@ -209,11 +202,8 @@ void mostrarMenu(vector<Matriz*>& matrices) {
         default:
             cout << "Opcion invalida. Intente de nuevo." << endl;
         }
-
         cout << endl;
-
     } while (opcion != 3);
-
     // Liberar la memoria de las matrices generadas
     for (int i = 0; i < matrices.size(); i++) {
         free(*matrices[i]);
