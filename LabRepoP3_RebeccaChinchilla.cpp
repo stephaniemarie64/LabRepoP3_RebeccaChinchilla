@@ -1,6 +1,50 @@
 #include <iostream>
+#include <vector>
+#include <cstdlib>
+#include <ctime>
+#include <iomanip> 
 
 using namespace std;
+
+struct Matriz {
+    int filas;
+    int columnas;
+    int** datos;
+};
+
+// Funcion para generar una matriz con valores aleatorios
+Matriz generarMatriz(int filas, int columnas) {
+    Matriz matriz;
+    matriz.filas = filas;
+    matriz.columnas = columnas;
+    matriz.datos = new int* [filas];
+    srand(time(0)); // random
+    for (int i = 0; i < filas; i++) {
+        matriz.datos[i] = new int[columnas];
+        for (int j = 0; j < columnas; j++) {
+            matriz.datos[i][j] = rand() % 101 - 50; // Generar valores aleatorios en el rango [-50, 50]
+        }
+    }
+    return matriz;
+}
+
+// Funcion para liberar la memoria de una matriz
+void liberarMatriz(Matriz& matriz) {
+    for (int i = 0; i < matriz.filas; i++) {
+        delete[] matriz.datos[i];
+    }
+    delete[] matriz.datos;
+}
+
+// Funcion para mostrar una matriz en la consola
+void mostrarMatriz(const Matriz& matriz) {
+    for (int i = 0; i < matriz.filas; i++) {
+        for (int j = 0; j < matriz.columnas; j++) {
+            cout << setw(5) << matriz.datos[i][j] << " "; // Utilizamos setw(5) para alinear las columnas
+        }
+        cout << endl;
+    }
+}
 
 void opcion1() {
     cout << "Seleccionaste la opcion 1" << endl;
